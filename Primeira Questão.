@@ -1,0 +1,80 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Professor {
+    private String nome;
+    private String cpf;
+    private String titulacao;
+    private double salario;
+
+    public Professor(String nome, String cpf, String titulacao, double salario) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.titulacao = titulacao;
+        this.salario = salario;
+    }
+
+    public String getTitulacao() {
+        return titulacao;
+    }
+
+    public double calcularContribuicao() {
+        switch (titulacao.toLowerCase()) {
+            case "doutor":
+                return salario * 0.016;
+            case "mestre":
+                return salario * 0.014;
+            case "especialista":
+                return salario * 0.012;
+            default:
+                return 0;
+        }
+    }
+}
+
+public class ContribuicaoSindical {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Professor> professores = new ArrayList<>();
+        double totalArrecadado = 0;
+        int quantidadeMestres = 0;
+
+        // Entrada de dados dos professores
+        while (true) {
+            System.out.println("Deseja inserir um novo professor? (sim/não)");
+            String resposta = scanner.nextLine();
+            if (resposta.equalsIgnoreCase("não")) {
+                break;
+            }
+
+            System.out.println("Nome do professor: ");
+            String nome = scanner.nextLine();
+
+            System.out.println("CPF do professor: ");
+            String cpf = scanner.nextLine();
+
+            System.out.println("Titulação (Doutor, Mestre, Especialista): ");
+            String titulacao = scanner.nextLine();
+
+            System.out.println("Salário do professor: ");
+            double salario = scanner.nextDouble();
+            scanner.nextLine(); // Limpar buffer
+
+            // Criar novo professor e adicionar à lista
+            Professor professor = new Professor(nome, cpf, titulacao, salario);
+            professores.add(professor);
+
+            // Atualizar total arrecadado e quantidade de Mestres
+            totalArrecadado += professor.calcularContribuicao();
+            if (professor.getTitulacao().equalsIgnoreCase("mestre")) {
+                quantidadeMestres++;
+            }
+        }
+
+        // Exibir resultados
+        System.out.println("Total arrecadado pelo sindicato: R$ " + totalArrecadado);
+        System.out.println("Quantidade de professores Mestres: " + quantidadeMestres);
+
+        scanner.close();
+    }
+}
