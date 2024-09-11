@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Aluno {
+    private String nome;
+    private double nota;
+
+    // Construtor
+    public Aluno(String nome, double nota) {
+        this.nome = nome;
+        this.nota = nota;
+    }
+
+    // Getters
+    public String getNome() {
+        return nome;
+    }
+
+    public double getNota() {
+        return nota;
+    }
+
+    // Método para calcular o conceito
+    public String getConceito() {
+        if (nota >= 9) {
+            return "A";
+        } else if (nota >= 7) {
+            return "B";
+        } else if (nota >= 5) {
+            return "C";
+        } else {
+            return "D";
+        }
+    }
+}
+
+public class ConceitosAlunos {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Aluno> alunos = new ArrayList<>();
+
+        // Entrada de dados dos alunos
+        while (true) {
+            System.out.println("Deseja inserir um novo aluno? (sim/não)");
+            String resposta = scanner.nextLine();
+            if (resposta.equalsIgnoreCase("não")) {
+                break;
+            }
+
+            System.out.println("Nome do aluno: ");
+            String nome = scanner.nextLine();
+
+            System.out.println("Nota do aluno: ");
+            double nota = scanner.nextDouble();
+            scanner.nextLine(); // Limpar o buffer
+
+            // Criar novo aluno e adicionar à lista
+            Aluno aluno = new Aluno(nome, nota);
+            alunos.add(aluno);
+        }
+
+        // Exibir conceitos dos alunos
+        System.out.println("\nConceitos finais dos alunos:");
+        for (Aluno aluno : alunos) {
+            System.out.println("Aluno: " + aluno.getNome() + " | Nota: " + aluno.getNota() + " | Conceito: " + aluno.getConceito());
+        }
+
+        scanner.close();
+    }
+}
